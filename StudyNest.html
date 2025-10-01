@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>StudyNest</title>
+    <style>
+        :root {
+            --primary-color: #2980b9;
+            --secondary-color: #e74c3c;
+            --background-color: #2c3e50;
+            --text-color: white;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            color: #2c3e50;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            flex-wrap: wrap;
+        }
+        .header img {
+            height: 80px;
+            width: 80px;
+            flex-shrink: 0;
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            flex-grow: 1;
+            text-align: center;
+            min-width: 200px;
+        }
+        .search-box {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+            width: 300px;
+            max-width: 90%;
+            margin-top: 10px;
+        }
+        .search-box input {
+            flex-grow: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px 0 0 5px;
+            font-size: 1rem;
+        }
+        .search-box button {
+            padding: 10px 20px;
+            background-color: var(--secondary-color);
+            border: none;
+            color: var(--text-color);
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 1rem;
+        }
+        .search-box button:hover {
+            background-color: #c0392b;
+        }
+        hr {
+            border: 3px solid var(--primary-color);
+            margin: 0;
+        }
+        #aside1 {
+            display: flex;
+            flex-grow: 1;
+            height: calc(100vh - 180px);
+            overflow: hidden;
+        }
+        .leftsection {
+            width: 20%;
+            height: 100%;
+            border-right: 2px solid var(--primary-color);
+            text-align: center;
+            border-radius: 2px;
+            overflow-y: auto;
+            background-color: #f9f9f9;
+        }
+        .leftsection a {
+            display: block;
+            margin: 10px 0;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .leftsection a:hover {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+        }
+        .menu-item {
+            padding: 10px;
+            background-color: #3498db;
+            color: var(--text-color);
+            cursor: pointer;
+            margin: 10px 10px 5px 10px;
+            border-radius: 4px;
+            user-select: none;
+            transition: background-color 0.3s ease;
+        }
+        .menu-item:hover {
+            background-color: #2874a6;
+        }
+        .submenu {
+            display: none;
+            padding-left: 20px;
+            background-color: #ecf0f1;
+            overflow-wrap: break-word;
+        }
+        .submenu a {
+            color: #2c3e50;
+            font-size: 16px;
+        }
+        .submenu a:hover {
+            color: #e74c3c;
+        }
+        main.content {
+            width: 80%;
+            padding: 20px;
+            border-radius: 2px;
+            overflow-y: auto;
+            min-height: 500px;
+            color: #34495e;
+            background-color: #fefefe;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        nav.top-nav {
+            margin-left: auto;
+            margin-top: 10px;
+            font-size: 18px;
+        }
+        nav.top-nav a {
+            color: var(--text-color);
+            margin-left: 20px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        nav.top-nav a:hover {
+            color: var(--secondary-color);
+        }
+        footer {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            padding: 5px 10px;
+            font-weight: bold;
+            position: relative;
+        }
+        .moving-footer {
+            overflow: hidden;
+            white-space: nowrap;
+            box-sizing: border-box;
+            background-color: #356798;
+            color: var(--primary-color);
+        }
+        .moving-footer p {
+            display: inline-block;
+            padding-left: 100%;
+            animation: scrollFooter 50s linear infinite;
+            font-weight: bold;
+            font-size: 10px;
+            color: var(--text-color);
+        }
+        @keyframes scrollFooter {
+            0% {
+                transform: translateX(0%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+        @keyframes moveLine {
+            0% {
+                transform: translateX(100%);
+            }
+            50% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+        .moving-line {
+            position: relative;
+            height: 3px;
+            background-color: var(--text-color);
+            overflow: hidden;
+        }
+        .moving-line::before {
+            content: '';
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            background-color: var(--primary-color);
+            animation: moveLine 3s linear infinite;
+        }
+
+        @media (max-width: 991px) {
+            #aside1 {
+                flex-direction: column;
+                height: auto;
+            }
+            .leftsection {
+                width: 100%;
+                height: auto;
+                border-right: none;
+                border-bottom: 2px solid var(--primary-color);
+                max-height: 200px;
+            }
+            main.content {
+                width: 100%;
+                min-height: 400px;
+                margin-top: 10px;
+            }
+            nav.top-nav {
+                margin-left: 0;
+                margin-top: 15px;
+                text-align: center;
+                width: 100%;
+            }
+        }
+        @media (max-width: 600px) {
+            .header {
+                justify-content: center;
+                text-align: center;
+            }
+            .header img {
+                margin-bottom: 10px;
+            }
+            .header h1 {
+                flex-grow: 0;
+                font-size: 1.8rem;
+                margin-bottom: 10px;
+            }
+            .search-box {
+                width: 100%;
+                margin-top: 0;
+            }
+            .search-box input, .search-box button {
+                width: 100%;
+                border-radius: 5px;
+            }
+            .search-box {
+                flex-direction: column;
+                gap: 8px;
+            }
+            nav.top-nav a {
+                font-size: 16px;
+                margin: 0 10px;
+            }
+            .menu-item, .leftsection a {
+                font-size: 14px;
+                padding: 8px;
+            }
+            .submenu a {
+                font-size: 14px;
+            }
+            main.content {
+                font-size: 16px;
+                padding: 15px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <header class="header" role="banner">
+        <img src="Logo.png" alt="StudyNest Logo" />
+        <h1>StudyNest</h1>
+        <div class="search-box" role="search">
+            <input type="text" id="searchInput" placeholder="Search here..." aria-label="Search content" />
+            <button onclick="searchContent()" aria-label="Search">Search</button>
+        </div>
+        <nav class="top-nav" aria-label="Primary navigation">
+            <a href="about.html">About</a>
+            <a href="privacy.html">Privacy</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+    </header>
+
+    <div class="moving-line" aria-hidden="true"></div>
+    <hr />
+
+    <nav id="aside1" aria-label="Course navigation">
+        <div class="leftsection" id="leftsection">
+            <div class="menu-item" onclick="toggleSubmenu('html-submenu')" role="button" tabindex="0" aria-expanded="false" aria-controls="html-submenu">Fundamentals Of Computer</div>
+            <div id="html-submenu" class="submenu" aria-hidden="true">
+                <a href="#" onclick="loadContent('html_intro')">FOC_Unit-1</a>
+                <a href="#" onclick="loadContent('FOC_Unit2')">FOC_Unit-2</a>
+                <a href="#" onclick="loadContent('html_intro')">FOC_Unit-3</a>
+                <a href="#" onclick="loadContent('FOC_Unit2')">FOC_Unit-4</a>
+                <a href="#" onclick="loadContent('')">Study Material</a>
+            </div>
+        </div>
+        <main class="content" id="content" tabindex="0">Click on a link to display content</main>
+    </nav>
+
+    <footer role="contentinfo">
+        <div class="moving-footer">
+            <p>Thanks to: SMC Moodbiri </p>
+        </div>
+    </footer>
+
+<script src="Content.js"></script> 
+    <script>
+        function toggleSubmenu(id) {
+            const submenu = document.getElementById(id);
+            const isVisible = submenu.style.display === 'block';
+            submenu.style.display = isVisible ? 'none' : 'block';
+
+            const button = submenu.previousElementSibling;
+            button.setAttribute('aria-expanded', !isVisible);
+            submenu.setAttribute('aria-hidden', isVisible);
+        }
+
+        function searchContent() {
+            const input = document.getElementById("searchInput").value.trim();
+            const contentDiv = document.getElementById("content");
+
+            if (input === "") return;
+            //remove previous highlight
+            const highlightedElements = contentDiv.querySelectorAll("mark");
+            highlightedElements.forEach(el => {
+                el.replaceWith(document.createTextNode(el.textContent));
+            });
+
+            const innerHTML = contentDiv.innerHTML;
+            const regex = new RegExp(input, 'gi');
+            const newHTML = innerHTML.replace(regex, `<mark>$1</mark>`);
+            contentDiv.innerHTML = newHTML;
+        }
+    </script>
+</body>
+</html>
